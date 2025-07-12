@@ -1,0 +1,313 @@
+:root {
+    --primary-pink: #ff79c6;
+    --primary-cyan: #8be9fd;
+    --primary-purple: #bd93f9;
+    --dark-bg: #282a36;
+    --light-bg: #44475a;
+    --comment-green: #50fa7b;
+    --foreground: #f8f8f2;
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--foreground);
+    font-family: 'VT323', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    background: linear-gradient(160deg, #000 0%, var(--dark-bg) 100%);
+}
+
+#game-container {
+    width: 960px;
+    height: 720px; 
+    position: relative;
+    box-shadow: 0 0 25px var(--primary-purple);
+    background-color: #000;
+    overflow: hidden;
+}
+
+#game-canvas {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    image-rendering: pixelated; 
+}
+
+#scanline-overlay, #vhs-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+#scanline-overlay {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 50%, rgba(0, 0, 0, 0.1) 50%);
+    background-size: 100% 4px;
+    animation: scanline 15s linear infinite;
+}
+
+@keyframes scanline {
+    from { background-position: 0 0; }
+    to { background-position: 0 -720px; }
+}
+
+#vhs-overlay {
+    opacity: 0;
+    background: linear-gradient(90deg, rgba(255,0,0,0.2), rgba(0,255,0,0.2), rgba(0,0,255,0.2));
+    animation: vhs-glitch 0.1s linear infinite alternate-reverse;
+}
+
+.vhs-active { opacity: 0.1 !important; }
+
+@keyframes vhs-glitch {
+    0% { transform: translate(2px, 1px) skewX(-5deg); }
+    100% { transform: translate(-2px, -1px) skewX(5deg); }
+}
+
+#ui-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.ui-panel {
+    background-color: rgba(40, 42, 54, 0.85);
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin: 20px;
+    color: var(--foreground);
+    box-shadow: 0 0 10px inset;
+}
+
+#dialogue-box {
+    border: 2px solid var(--primary-cyan);
+    font-size: 24px;
+    text-shadow: 0 0 5px var(--primary-cyan);
+    min-height: 100px;
+    border-color: var(--primary-cyan);
+    box-shadow: 0 0 15px var(--primary-cyan) inset;
+    pointer-events: all;
+    margin-top: auto;
+}
+
+#dialogue-text { 
+    white-space: pre-wrap; 
+    min-height: 1.2em;
+}
+
+.dialogue-choice-list {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.dialogue-choice-item {
+    padding: 2px 0;
+    font-size: 22px;
+    color: var(--foreground);
+}
+
+.dialogue-choice-item.selected {
+    color: var(--primary-cyan);
+}
+
+
+#dialogue-prompt {
+    text-align: right;
+    font-size: 18px;
+    animation: blink 1.5s step-end infinite;
+}
+
+#siddhi-display {
+    border: 2px solid var(--primary-pink);
+    font-size: 18px;
+    text-shadow: 0 0 5px var(--primary-pink);
+    border-color: var(--primary-pink);
+    box-shadow: 0 0 10px var(--primary-pink) inset;
+    width: max-content;
+    align-self: flex-start;
+    padding: 8px 15px;
+}
+
+#siddhi-display h3 {
+    margin: 0 0 5px 0;
+    padding: 0;
+    font-size: 22px;
+    color: var(--primary-pink);
+}
+
+#siddhi-list { list-style: none; padding: 0; margin: 0; }
+#siddhi-list li { padding-left: 20px; position: relative; }
+#siddhi-list li::before { content: '✧'; position: absolute; left: 0; color: var(--primary-cyan); }
+
+#title-screen, #map-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(160deg, #000 0%, var(--dark-bg) 100%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#title-screen h1, #map-screen h1 {
+    font-family: 'Major Mono Display', monospace;
+    font-size: 48px;
+    color: var(--primary-purple);
+    text-shadow: 0 0 10px var(--primary-purple), 0 0 20px var(--primary-pink);
+    margin: 0;
+}
+
+#title-screen p {
+    font-size: 24px;
+    color: var(--primary-cyan);
+    text-shadow: 0 0 5px var(--primary-cyan);
+    animation: blink 1.5s step-end infinite;
+    margin-top: 50px;
+}
+
+#map-locations {
+    margin-top: 40px;
+    pointer-events: all;
+}
+
+.map-location {
+    font-size: 28px;
+    padding: 15px 30px;
+    margin: 10px;
+    border: 2px solid var(--primary-cyan);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+.map-location:hover {
+    background: var(--primary-cyan);
+    color: var(--dark-bg);
+    box-shadow: 0 0 15px var(--primary-cyan);
+}
+.map-location.locked {
+    border-color: var(--light-bg);
+    color: var(--light-bg);
+    cursor: not-allowed;
+}
+.map-location.locked:hover {
+    background: none;
+    box-shadow: none;
+}
+
+#cutscene-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 11;
+    color: var(--foreground);
+    font-size: 28px;
+    text-align: center;
+    width: 80%;
+    text-shadow: 2px 2px 8px var(--dark-bg);
+    pointer-events: none;
+    display: none;
+    transition: opacity 0.5s ease-in-out;
+    background-color: rgba(20, 21, 28, 0.92);
+    border: 1px solid var(--primary-purple);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px var(--primary-purple);
+}
+
+#rhythm-game-container {
+    position: absolute;
+    bottom: 180px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    display: flex;
+    gap: 10px;
+}
+.rhythm-char {
+    width: 50px;
+    height: 50px;
+    border: 2px solid var(--primary-cyan);
+    background: rgba(40, 42, 54, 0.8);
+    color: var(--primary-cyan);
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.1s;
+}
+.rhythm-char.active {
+    border-color: var(--primary-pink);
+    transform: scale(1.1);
+}
+.rhythm-char.correct {
+    background: var(--comment-green);
+    color: var(--dark-bg);
+    border-color: var(--comment-green);
+}
+
+#controls-guide {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.7);
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1px solid var(--primary-purple);
+    font-size: 20px;
+    color: var(--primary-purple);
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* NEW STYLES FOR PHURBA MECHANIC */
+@keyframes glitch {
+    0% { opacity: 0.2; transform: translate(2px, 2px); }
+    25% { opacity: 0.5; transform: translate(-2px, 0px); }
+    50% { opacity: 0.3; transform: translate(0px, -2px); }
+    75% { opacity: 0.6; transform: translate(2px, 0px); }
+    100% { opacity: 0.2; transform: translate(-2px, 2px); }
+}
+
+.glitching {
+    animation: glitch 0.2s infinite;
+}
+
+.stabilized {
+    box-shadow: 0 0 20px var(--comment-green);
+}

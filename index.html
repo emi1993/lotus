@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotus-Born Labyrinth</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Major+Mono+Display&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+        <div id="scanline-overlay"></div>
+        <div id="vhs-overlay"></div>
+        
+        <div id="title-screen" style="display: flex;">
+            <h1>Lotus-Born Labyrinth</h1>
+            <p id="loading-prompt">Initializing...</p>
+        </div>
+        
+        <div id="map-screen" style="display: none;">
+            <h1>Mandala Worlds</h1>
+            <div id="map-locations"></div>
+        </div>
+
+        <div id="cutscene-text"></div>
+
+        <div id="ui-container">
+            <div id="siddhi-display" class="ui-panel">
+                <h3>Siddhis</h3>
+                <ul id="siddhi-list"></ul>
+            </div>
+            <div id="controls-guide">
+                Use ← → to Move | Press 'A' to Interact
+            </div>
+            <div id="dialogue-box" class="ui-panel" style="display: none;">
+                <div id="dialogue-text"></div>
+                <div id="dialogue-prompt">Press 'A' to continue...</div>
+            </div>
+            <div id="rhythm-game-container"></div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+    <script src="levels/palace.js"></script>
+    <script src="levels/charnel.js"></script>
+    <script src="levels/nalanda.js"></script>
+    <script src="levels/asura_caves.js"></script>
+    <script>
+        window.Game.init();
+    </script>
+</body>
+</html>
